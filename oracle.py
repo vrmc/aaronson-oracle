@@ -1,15 +1,15 @@
 from collections import Counter
 
 class Model:
-    def __init__(self, charset, MAX_GRAM_LENGTH):
+    def __init__(self, CHARSET, MAX_GRAM_LENGTH):
         self.data = {}
         self.input = ""
-        self.charset = charset
+        self.CHARSET = charset
         self.MAX_GRAM_LENGTH = MAX_GRAM_LENGTH
 
     def __update(self, gram, x):
         if gram not in self.data:
-            self.data[gram] = {c: 0 for c in self.charset}
+            self.data[gram] = {c: 0 for c in self.CHARSET}
         self.data[gram][x] += 1
 
     def __predict(self, gram):
@@ -23,11 +23,11 @@ class Model:
             return x
 
     def feed(self, xs):
-        if not all(x in self.charset for x in xs):
+        if not all(x in self.CHARSET for x in xs):
             raise ValueError(
-                'Input \'{}\' contains characters not in charset "{}".'.format(
+                'Input \'{}\' contains characters not in CHARSET "{}".'.format(
                     xs,
-                    self.charset
+                    self.CHARSET
                 )
             )
 
@@ -47,5 +47,5 @@ class Model:
             x = self.__predict(gram[i:])
             if not x is None:
                 return x
-        return self.charset[0] # fallback if model has not enough data
+        return self.CHARSET[0] # fallback if model has not enough data
 

@@ -1,40 +1,36 @@
 from collections import Counter
 
 class Model:
-    def __init__(self, charset, max_gram_length=5):
+    def __init__(self, charset, MAX_GRAM_LENGTH):
         self.data = {}
         self.input = ""
         self.charset = charset
-        self.MAX_GRAM_LENGTH = max_gram_length
+        self.MAX_GRAM_LENGTH = MAX_GRAM_LENGTH
 
     def __update(self, gram, x):
-        if x not in self.charset:
-            raise ValueError(
-                'Character \'{}\' is not in charset "{}".'.format(
-                    x,
-                    self.charset
-                )
-            )
-
         if gram not in self.data:
             self.data[gram] = {c: 0 for c in self.charset}
         self.data[gram][x] += 1
 
     def __predict(self, gram):
-        if not all(x in self.charset for x in gram):
+        if gram not in self.data:
+            return None
+        else:
+            x, _ = max(
+                self.data[gram].items(),
+                key=lambda t: t[1] # count of gram
+            )
+            return x
+
+    def feed(self, xs):
+        if not all(x in self.charset for x in xs):
             raise ValueError(
-                'Gram \'{}\' contains characters not in charset "{}".'.format(
-                    gram,
+                'Input \'{}\' contains characters not in charset "{}".'.format(
+                    xs,
                     self.charset
                 )
             )
 
-        if gram not in self.data:
-            return None
-        else:
-            return max(self.data[gram].items(), key=lambda t: t[1])[0]
-
-    def feed(self, xs):
         for x in xs:
             gram = self.input[-self.MAX_GRAM_LENGTH:]
             self.input += x

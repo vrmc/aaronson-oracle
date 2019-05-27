@@ -23,7 +23,7 @@ m = Model('LR', 5) # L and R represent the left and right buttons respectively
 Upon initialisation, the model can be fed with training input, and will track
 the input being fed in.
 
-``python
+```python
 # feed accepts a string of inputs, ordered from left to right
 # This can be one char at a time...
 m.feed("L")

@@ -5,9 +5,9 @@ pressor predictor on the Raspberry Pi.
 
 ## How To Use `oracle.py`
 
-This repository comes with a Python module `oracle.py` which provides two
-functions, `feed(xs)` and `guess()`, that will perform the prediction of the
-next button to be pressed.
+This repository comes with a Python module `oracle.py` which provides a
+`Model` object with two methods, `feed(xs)` and `guess()`, that will perform
+the prediction of the next button to be pressed.
 
 First of all, create a `Model` object. The initialisation function requires
 `CHARSET`, a string which determines which characters can appear in the
